@@ -27,7 +27,7 @@ class PaperDbManager {
 
         //read list
         fun readTodoList() : ArrayList<Todo>?{
-            return Paper.book().read(TODO_OBJECT, null)
+            return Paper.book().read(TODO_OBJECT, arrayListOf())
         }
 
         //remove here
