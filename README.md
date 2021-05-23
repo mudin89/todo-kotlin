@@ -15,11 +15,11 @@ RXJava for crashed preventor and avoid memeory leaks, custom text view, and appX
 
 ## Future Improvement.
 
-1 Using flutter so can run for both Android/IOS and will be using BLoC but same MVVM pattern.
-2 Using ROOM database in place of PaperDB
-3 Using jetpack for dynamic ui implementation
-4 Added release key for release build
-5 Using APIs to store data in the server so it will be easy to access.
+1. Using flutter so can run for both Android/IOS and will be using BLoC but same MVVM pattern.
+2. Using ROOM database in place of PaperDB
+3. Using jetpack for dynamic ui implementation
+4. Added release key for release build
+5. Using APIs to store data in the server so it will be easy to access.
 
 
 
