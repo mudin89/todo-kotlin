@@ -5,12 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ads.uts.utils.NavigationManager;
+import com.ads.uts.utils.PaperDbManager;
 import com.najmuddin.todo.R;
 import com.najmuddin.todo.model.Todo;
 
@@ -47,11 +50,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if(todo.isComplete()){
             viewHolder.tvStatus.setText("Complete");
+            viewHolder.cbComplete.setChecked(true);
         } else {
             viewHolder.tvStatus.setText("Incomplete");
+            viewHolder.cbComplete.setChecked(false);
         }
 
         viewHolder.cbComplete.setText(todo.getTitle());
+
+        viewHolder.cbComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    viewHolder.tvStatus.setText("Complete");
+                    viewHolder.cbComplete.setChecked(true);
+                } else {
+                    viewHolder.tvStatus.setText("Incomplete");
+                    viewHolder.cbComplete.setChecked(false);
+                }
+
+                todo.setComplete(b);
+                userArrayList.set(position,todo);
+                notifyDataSetChanged();
+                // save the changes into database
+                PaperDbManager.TODO.INSTANCE.saveTodoList(userArrayList);
+            }
+        });
     }
 
     @Override
@@ -59,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return userArrayList.size();
     }
 
-    class RecyclerViewViewHolder extends RecyclerView.ViewHolder {
+    class RecyclerViewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvTitle;
         TextView tvStartDate;
         TextView tvEndDate;
@@ -76,6 +100,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tvCountDown = itemView.findViewById(R.id.tvCountDown);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             cbComplete = itemView.findViewById(R.id.cbComplete);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            new NavigationManager().toFormActivity(view.getContext(),String.valueOf(getAdapterPosition()));
         }
     }
 }

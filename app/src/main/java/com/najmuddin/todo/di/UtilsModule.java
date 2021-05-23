@@ -1,6 +1,7 @@
 package com.najmuddin.todo.di;
 
 import com.ads.uts.utils.NavigationManager;
+import com.ads.uts.utils.PaperDbManager;
 import com.najmuddin.todo.viewmodel.MainViewModel;
 
 import java.util.concurrent.TimeUnit;

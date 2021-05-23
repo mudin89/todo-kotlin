@@ -9,7 +9,10 @@ class NavigationManager(){
 
     fun toFormActivity(context: Context, id: String?){
         val intent = Intent(context, FormActivity::class.java)
-        intent.putExtra("id", id)
+        if(id != null){
+            intent.putExtra("id", id)
+        }
+
         context.startActivity(intent)
     }
 

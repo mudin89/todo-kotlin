@@ -5,7 +5,7 @@ import io.paperdb.Paper
 
 class PaperDbManager {
 
-    object CUBE {
+    object TODO {
         val TODO_LIST = "TODO_LIST"
         val TODO_OBJECT = "TODO_OBJECT"
 
