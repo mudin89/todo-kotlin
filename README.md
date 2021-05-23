@@ -7,6 +7,8 @@ The apps can store the data locally and can checked for more intraction.
 This project was created in Android Kotlin as it has null safety build in. 
 The project is on android and will work as a base if want to be converted into hybrid(flutter)
 
+## Tech that used in the application
+
 In this project the achitecture that use was MVVM so it can update the ui reactively.
 Other tech/concept was used is Dagger for injection, PaperDB for Database, ViewModel for data distribution,
 RXJava for crashed preventor and avoid memeory leaks, custom text view, and appXBus.
