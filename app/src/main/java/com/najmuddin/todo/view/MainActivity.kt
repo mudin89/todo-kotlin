@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     var recyclerViewAdapter: RecyclerViewAdapter? = null
     var btnAdd: ImageView? = null
 
+    //using injecton for singleton instance --> save memory preformance
     @Inject
     lateinit var viewModel: MainViewModel
 
@@ -43,19 +44,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         context = this
 
+        //init of paperdb manager
         Paper.init(this@MainActivity)
 
+        //init of dagger injection
         (application as MyApplication).getAppComponent().doInjection(this)
+
+        //initializing the views
         val mainTitle  =  findViewById<TextView>(R.id.toolbarTitle)
+        recyclerView = findViewById(R.id.rcvMain)
+        btnAdd = findViewById(R.id.btnAdd)
 
         mainTitle.text = "To-do List"
 
-        recyclerView = findViewById(R.id.rcvMain)
+        //init viewmodel funtionality at here
         viewModel = ViewModelProviders.of(context!!).get(MainViewModel::class.java)
         viewModel.getUserMutableLiveData().observe(context!!, todoListUpdateObserver)
 
-        btnAdd = findViewById(R.id.btnAdd)
 
+
+        //click and appxbus listener was init here with observable to prevent any crash
         btnAdd?.setOnClickListener{
             navigationManager.toFormActivity(this@MainActivity, null)
         }
@@ -68,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    //init viewmodel observer
     var todoListUpdateObserver: Observer<ArrayList<Todo>> = Observer<ArrayList<Todo>> { todoArrayList ->
         recyclerViewAdapter = RecyclerViewAdapter(context, todoArrayList)
         recyclerView!!.layoutManager = LinearLayoutManager(context)
@@ -82,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         return d
     }
 
+    //refresh/update the list from any where (ie another activity/ adapter)
     private fun refreshListListener(): Disposable {
         val d = AppXBus.listen(AppXBus.AppEvents.refreshTodoList::class.java)
                 .subscribe({ ok ->
@@ -98,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.refreshTodoList()
     }
 
-    override fun onDestroy() {
+    override fun onDestroy() { //clear any observable here to prevent crashed
         super.onDestroy()
         compositeDisposable.clear()
     }

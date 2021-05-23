@@ -5,6 +5,8 @@ import io.paperdb.Paper
 
 class PaperDbManager {
 
+    //paperdb manager as simple database... can use ROOM in the future
+
     object TODO {
         val TODO_LIST = "TODO_LIST"
         val TODO_OBJECT = "TODO_OBJECT"
@@ -17,11 +19,13 @@ class PaperDbManager {
             return Paper.book().read(TODO_LIST, Todo())
         }
 
+        //save list
         fun saveTodoList(list : ArrayList<Todo>){
             Paper.book().write(TODO_OBJECT, list)
 
         }
 
+        //read list
         fun readTodoList() : ArrayList<Todo>?{
             return Paper.book().read(TODO_OBJECT, null)
         }

@@ -24,6 +24,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Activity context;
     ArrayList<Todo> userArrayList;
 
+    //adapter for todo lsit
+
     public RecyclerViewAdapter(Activity context, ArrayList<Todo> userArrayList) {
         this.context = context;
         this.userArrayList = userArrayList;
@@ -40,6 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+        //bind view here with current position object from the arraylist
         Todo todo = userArrayList.get(position);
         RecyclerViewViewHolder viewHolder= (RecyclerViewViewHolder) holder;
 
@@ -58,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         viewHolder.cbComplete.setText(todo.getTitle());
 
+        //handler for when check box is clicked
         viewHolder.cbComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -73,6 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 userArrayList.set(position,todo);
                 notifyDataSetChanged();
                 // save the changes into database
+                //ensure that all the data is update with the latest checked box state
                 PaperDbManager.TODO.INSTANCE.saveTodoList(userArrayList);
             }
         });
@@ -90,6 +95,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvCountDown;
         TextView tvStatus;
         CheckBox cbComplete;
+
+        //the base of viewholder is identified at here
 
         public RecyclerViewViewHolder(@NonNull View itemView) {
             super(itemView);

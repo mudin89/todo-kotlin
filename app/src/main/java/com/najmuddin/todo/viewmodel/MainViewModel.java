@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 public class MainViewModel extends ViewModel {
 
+    //view model for the app
     MutableLiveData<ArrayList<Todo>> todoLiveData;
     ArrayList<Todo> todoArrayList;
 

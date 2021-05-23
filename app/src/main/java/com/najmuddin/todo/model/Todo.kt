@@ -5,6 +5,8 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class Todo {
+    //to do object is defined at here. Using kotlin less boiler plate
+
     var title: String = ""
 
     var startDate: Date? = null

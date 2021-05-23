@@ -57,7 +57,11 @@ class FormActivity : AppCompatActivity() {
         tvConfirm = findViewById(R.id.tvConfirm)
         initView()
 
-        //initData
+        viewModel.userMutableLiveData.observe(this@FormActivity,{
+            // Update the UI when the data has changed
+        })
+
+        //check if any id is passed? passed means update, none means creating new one
         val key = getId()
         if(key != null){
             id  = key.toIntOrNull()
@@ -83,6 +87,7 @@ class FormActivity : AppCompatActivity() {
         return data
     }
 
+    //fill in the view with data
     fun fillInTheData(todo: Todo){
         btnStartDate.text = todo.getStartDateAsString()
         btnEndDate.text = todo.getEndDateAsString()
@@ -99,7 +104,10 @@ class FormActivity : AppCompatActivity() {
     fun initView(){
         mainTitle.text = "Add new To-Do List"
 
+        //clicklistener init at here
+
         btnConfirm?.setOnClickListener {
+            //button will proceed only if the variable needed is fulfilled
             //checker if any infomation is null
             if(startDate ==null || endDate == null){
                 Toast.makeText(
@@ -121,10 +129,6 @@ class FormActivity : AppCompatActivity() {
             todo.endDate =endDate
             todo.title = etTitle.text.toString()
             todo.isComplete = isCompleted
-
-            viewModel.userMutableLiveData.observe(this@FormActivity,{
-                // Update the UI when the data has changed
-            })
 
             if(id != null){
                 doSave(id!!,todo)
@@ -149,6 +153,7 @@ class FormActivity : AppCompatActivity() {
     }
 
     fun showDateDialog(isStartDate: Boolean){
+        //using dialog picker for date selecter
         // Get Current Date
         val c = getCalendar(if(isStartDate) startDate else endDate)
         val mYear = c.get(Calendar.YEAR)
@@ -178,6 +183,7 @@ class FormActivity : AppCompatActivity() {
     }
 
     fun getCalendar(date: Date?): Calendar {
+        //convert calendar to date
         val cal = Calendar.getInstance()
         if(date != null){
             cal.time = date
@@ -186,12 +192,12 @@ class FormActivity : AppCompatActivity() {
         return cal
     }
 
-    fun doSave(position: Int,todo: Todo){
+    fun doSave(position: Int,todo: Todo){ //save old obejct
         viewModel.updateTodo(position,todo)
         finish()
     }
 
-    fun createNew(todo: Todo){
+    fun createNew(todo: Todo){ //create new object
         viewModel.addNewTodo(todo)
         finish()
     }

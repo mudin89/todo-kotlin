@@ -11,36 +11,21 @@ public enum AppFont {
     ROBOTO_BOLD("RobotoCondensed-Bold.ttf"),
     ROBOTO_BOLDITALIC("RobotoCondensed-BoldItalic.ttf");
 
-    /**
-     * The value variable.
-     */
+    //class for using custom font
     private String value;
 
-    /**
-     * Constructor for GroupTypeEnum.
-     *
-     * @param val the key value
-     */
+
     AppFont(String val) {
         value = val;
     }
 
-    /**
-     * The overrided method toString.
-     *
-     * @return value
-     */
+
     @Override
     public String toString() {
 
         return this.value;
     }
 
-    /**
-     * To return the font name from the index
-     * @param index the font index
-     * @return the font name
-     */
     public static String getFontNameFromIndex(int index) {
         switch (index) {
             case 0: return TITILLIUM_SEMI_BOLD.toString();

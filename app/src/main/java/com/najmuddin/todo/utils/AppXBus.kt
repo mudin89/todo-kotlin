@@ -6,6 +6,9 @@ import io.reactivex.subjects.PublishSubject
 
 public object AppXBus {
 
+    //the central noticer for the app.
+    //act ad delivery man between activity/fragment etc
+
     private val publisher = PublishSubject.create<Any>()
 
     fun publish(event: Any) {
